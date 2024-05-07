@@ -10,6 +10,8 @@ const clearBtnEl = document.querySelector("#clearBtn")
 // selector for weather history
 const weatherHistoryEl = document.querySelector("#weather-history")
 
+const forecastEl = document.querySelector("#forecast")
+
 
 
 const APIkey = "df98c2ed44bfb4c404dab3b96c1c1261";
@@ -22,8 +24,9 @@ this gives you the weather at the retrieved lat lon
 const queryString = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}'
 
 */
-// loads any previous cities
+// loads any previous cities only after the entire page is loaded
 window.onload = function () {
+    //calls the following function once the page is loaded
     cityUpdateButton();
     hideClearButton();
     if (localStorage.length > 0) {
@@ -33,6 +36,8 @@ window.onload = function () {
 
 //
 weatherHistoryEl.on("click", function (event) {
+    // displays weather for any cities in local storage once the cities button is clicked. 
+    // if a button says "Denver" it will display Denver's weather when clicked
     if(event.target.matches("button")) {
         let clickedCity = event.target.textContent;
     displayCityForecast(clickedCity);
@@ -65,6 +70,20 @@ searchCityBtnEl.on("click", function (event) {
        } 
     }
 })
+
+// clears local storage... 
+function clearLocalStorage() {
+    localStorage.clear();
+}
+
+// clears forecast when there are no cities to display
+function clearForecast(){
+
+}
+
+
+
+
 
 // clear the search field once click submit
 function clearCityInput() {
