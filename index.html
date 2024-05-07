@@ -10,7 +10,8 @@
       rel="stylesheet"
       type="text/css"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- handles css-->
+    <script src="https://cdn.tailwindcss.com"></script> 
   </head>
 
   <body>
@@ -18,6 +19,7 @@
       <div class="container-fluid text-center text-white bg-dark p-2 weather-header"></div>
       <h1>Weather Dashboard</h1>
     </header>
+    
     <aside>
       <h3>ASIDE: List cities here with CLICKABLE links</h3>
       <h3>move city search here</h3>
@@ -29,23 +31,21 @@
         <div class="hero-content text-center">
           <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form id="search-form" class="card-body">
+              <h2>Search for a City</h2>
               <div class="form-control space-y-4">
-                <input type="text" name="search" id="search-input" placeholder="Find City or Location"
+                <!-- city input -->
+                <input type="text" name="search" class="city-name" id="search-input" placeholder="Manhattan, Kansas"/>
+              </div>
+              <input type="submit" value="Search" class="btn btn-primary" />
+            </form>
 
-
-
-
-       
-      </select>
-    </form>
-    <a href="./index.html"></a>
-    
-
-
-                <input type="submit" value="Search" class="btn btn-primary" />
-
-
-  </main>
+            <div id="weather-history" class="group-list"></div>
+            <section>
+            <button id="clearBtn" style="display: none">Clear Cities</button>
+          </div>
+        </div>
+      </div>
+    </main>
   <script src="./src/script.js"></script>
 </body>
 </html>

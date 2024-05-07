@@ -1,24 +1,128 @@
 // declare Selectors:
+
+const searchCityBtnEl = document.querySelector("#searchBtn")
+// declares cityInputE1 variable wnd stores city name once inputted
+const cityInputEl = document.querySelector("#cityName");
 // declares searchForm variable and finds the first class element labeled "search-form"
 const searchForm = document.querySelector("#search-form");
-const cityInputEl = document.querySelector("#cityName");
+// declare selector for the clear button
+const clearBtnEl = document.querySelector("#clearBtn")
+// selector for weather history
+const weatherHistoryEl = document.querySelector("#weather-history")
+
 
 
 const APIkey = "df98c2ed44bfb4c404dab3b96c1c1261";
 /* need to add to js page 
+
+// this give you the lat & lon of the city/location
+// `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${APIKey}`
+
+this gives you the weather at the retrieved lat lon
 const queryString = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}'
 
 */
+// loads any previous cities
+window.onload = function () {
+    cityUpdateButton();
+    hideClearButton();
+    if (localStorage.length > 0) {
+     clearCityBtn();
+    }
+  };
+
+//
+weatherHistoryEl.on("click", function (event) {
+    if(event.target.matches("button")) {
+        let clickedCity = event.target.textContent;
+    displayCityForecast(clickedCity);
+  }
+});
+
+// Clears history when you click "Clear Cities"
+clearBtnEl.on("clckl", function() {
+    clearLocalStorage();
+    cityUpdateButton();
+    clearForecast();
+    hideClearButton();
+} )
+
+
+//add event listener for searchCityBtnEl
+searchCityBtnEl.on("click", function (event) {
+    // prevents from clearing the screen when refresh
+    event.preventDefault();
+    // defines a variable to store the city name inputed
+    let searchCityInput = "";
+    //
+    if (event.target.matches("button")) {
+        searchCityInput = cityInputEl.value.trim()
+
+       if (searchCityInput !== "") {
+        cityLatAndLon(searchCityInput);
+        clearCityBtn();
+        clearCityInput()
+       } 
+    }
+})
+
+// clear the search field once click submit
+function clearCityInput() {
+    cityInputEl.value;
+}
+
+//
+function clearCityBtn() {
+    document.getElementById("clearBtn").style.display = ""
+}
+
+// This function provides the lat & lon for the city
+function cityLatAndLon(userCity) {
+    if(!userCity ) {
+        userCity = "userCity";
+    } else {
+        alert("Please enter a City")
+    }
+
+    const citySearch = `https://api.openweathermap.org/geo/1.0/direct?q=${userCity}&limit=5&appid=${APIKey}`
+
+    console.log(citySearch);
+
+    fetch(citySearch)
+    .then(function (citySearch) {
+        if (!response.ok) {
+            alert(response.status + " " + response.statusText);
+            return;
+        }
+    return response.JSON();
+    }).then(function (citySearchResult) {
+        console.log(citySearchResult);
+        resultText.textContent = query
+
+        if(!citySearchResult.results.length) {
+            console.log('No Results Found!');
+            resultContainer.innerHTML = String.raw`<h3>No results found, search again!</h3>`;
+        } else {
+            resultText.textContent = "";
+            for (const result of searchResult.results) {
+                printResults(result);
+            }
+        }
+    }).catch(function (error) {
+        console.error(error);
+        alert(error);
+    })
+}
 
 function FormSubmitHandler(event) {
 
     // prevents from resting the page when submit is clicked
     event.preventDefault();
 
-    // removes whit
+    // removes white space
     const cityInput = cityInputEl.value.trim();
     // for lat and long of city
-    const cityLat = c
+    const cityLat = "cityL"
 
     // logs results to the screen
     console.log(cityInput);
@@ -57,7 +161,7 @@ function searchApi(cityLat, cityLon) {
     }
 
     // this provides the weather forecast for the desired location at the inputted lat & lon
-    const queryString = 'https://api.openweathermap.org/data/2.5/forecast?lat=${citylat}&lon=${cityLon}&appid=${APIkey}'
+    const queryString = `https://api.openweathermap.org/data/2.5/forecast?lat=${citylat}&lon=${cityLon}&appid=${APIkey}`
 
     console.log(queryString);
 
@@ -71,15 +175,16 @@ function searchApi(cityLat, cityLon) {
             return;
         }
 
-        return response.json();
+        return response.JSON();
     }).then(function (searchResult) {
 
         console.log(searchResult);
 
         resultText.textContent = query;
 
+
         if (!searchResult.results.length) {
-            console.log('No results found!');
+            console.log('No Results Found!');
             resultContainer.innerHTML = String.raw`<h3>No results found, search again!</h3>`;
         } else {
             resultText.textContent = "";
@@ -99,3 +204,5 @@ function displayForecast(results) {
 
 }
 
+//event listeners
+cityInputEl.on('submit', handleAddTask)
