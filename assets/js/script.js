@@ -224,9 +224,9 @@ function displayFiveDayForecast(forecastWeather) {
     // as long as forecastedHour does not equal to 12 (noon) and timeOffset is less that 8
     while (forecastedHour != 12 && timeOffset < 8) {
         timeOffset++ // time gets incremented
-
-
-        
+        forecastedTime = forecastWeather.list.[fiveDayIndex].dt
+        forecastedAdjTime = forecastWeather + forecastedTimezone;
+        forecastedHour = roundTimeOff(forecastedHour)
     }
         
    
