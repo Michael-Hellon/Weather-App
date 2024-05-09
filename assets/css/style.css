@@ -6,3 +6,107 @@
     background-size: cover;
     background-position: center;
 }
+
+#search-button {
+    background-color: #6313e6;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+.date-header {
+    text-align: center;
+}
+
+#displayedCity {
+    text-align: center;
+
+}
+
+#clear-button {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#clear-section {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.current-card-text {
+    text-align: center;
+
+}
+
+#current-city {
+
+    background-size: 15%;
+
+}
+
+.card-img-top {
+    size: 75%;
+}
+
+.card-body {
+    margin-top: 0px;
+    padding: 0px !important;
+    text-align: center;
+
+}
+
+#clear-section {
+
+    padding: 1%;
+}
+
+.city-button {
+
+    background-color: #1399e6;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    border-radius: 8px;
+    border-color: #E8E8E8;
+}
+
+.city-button:focus {
+    background-color: #0e0779;
+
+}
+
+.city-button:hover {
+
+    font-size: 26px;
+}
+
+#clear-button {
+    background-color: #6313e6;
+    border: none;
+    color: white;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 8px;
+
+}
+
+.current-card-text {
+    color:#0e0779;
+    
+}
+
+#displayedCity {
+    color:#0e0779;
+
+}
