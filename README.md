@@ -47,6 +47,7 @@ To see the project on the browser visit <https://michael-hellon.github.io/MOD6-W
 
 ![screenshot](/assets/images/screenshot.png)
 
+
 ## Credits
 
 The original source code was provided by my client. I worked on this project myself with no other collaborators. I used the several pages from:
