@@ -42,4 +42,27 @@ There are no special installation steps for this project. All you need to do is 
 Once you have it in your local repository, on your computer, you can use Visual Studio Code to open the folder. Then you will see the JavaScript.js (currently with my pseudo-code notes in the top half) the index.html, the style.css and other associated files. You can then review the files, preview the script.js, style.css, and the index.html, and then open the index.html in a browser. Click on “Add Employees” to build your own tracker.
 
 
+To see the project on the browser visit <https://michael-hellon.github.io/MOD6-Weather-App/>.
+
+
+![screenshot](/assets/images/screenshot.png)
+
+## Credits
+
+The original source code was provided by my client. I worked on this project myself with no other collaborators. I used the several pages from:
+ W3Schools <https://www.w3schools.com/>
+ MDN <https://developer.mozilla.org/en-US/> 
+ 
+I used an API from OpenWeather <https://openweathermap.org/> to get the weather data. 
+ 
+
+## License
+
+Please refer to the LICENSE in the repo.
+
+
+
+>.
+
+
 

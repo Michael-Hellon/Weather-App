@@ -196,6 +196,7 @@ THEN I am presented with the city name, the date, an icon representation of weat
 
 function displayCurrentForecast(currentWeather) {
     let displayedCity = currentWeather.name;
+    console.log("displayedCity", displayedCity);
     let currentDate = moment.unix(currentWeather.dt).format("DD MMM YYY h:mm:a");
     let currentTemp = (currentWeather.main.temp).toFixed(2);
     let currentWind = currentWeather.wind.speed;
@@ -257,6 +258,7 @@ function displayFiveDayForecast(forecastWeather) {
         timeOffset++ // time gets incremented
         let forecastedTime = forecastWeather.list[fiveDayIndex].dt
         forecastedAdjTime = forecastWeather + forecastedTimezone;
+        console.log("forecastedTime", forecastedTime);
         // formats the forecasted Hour to 2 digits (includes the 0 prior to 1000 hrs) to use in the next step 
         forecastedHour = moment.unix(forecastedAdjTime).format("KK");
         forecastedHour = roundTimeOff(forecastedHour);
