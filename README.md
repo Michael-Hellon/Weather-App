@@ -3,8 +3,9 @@ A weather app dashboard
 
 ## Description
 
-For this weeks project we had to create a weather app that will run in the browser and feature dynamically updated HTML and CSS.
+For this weeks project we had to create a weather Dashboard app that will run in the browser and feature dynamically updated HTML and CSS. The Weather Dashboard will consist of 3 elements. The first will be an input box for you to enter the city's name, the next part will have clickable button for each city. The main part of the screen will display the current date and time, as well as the current temperature, wind speed, and humidity for the current city selected as well as for the 5 day forecast. The Weather Dashboard will pull previous cities you have searched for in local storage. 
 
+- My main motivation was to get everything working. Im still struggling with getting local storage to work properly.
 
 ## User Story
 
