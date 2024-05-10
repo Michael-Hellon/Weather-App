@@ -102,8 +102,16 @@ function cityUpdateButton() {
 
     for (let i = 0; i < localStorage.length; i++) {
         let city = localStorage.key(i);
+
+        // creates new elements with attributes - tried doing it like this, could not get it to work right. 
+        // let newDivEl = $('<div>').addClass('card').attr('current-city', current-city.id).css({width: '75%','background-image': `url(${backgroundImageURL})`}).html(`<h1 id="displayedCity">${displayedCity}</h1>`);
+        // let newParaEl = $("<p>").addClass('current-card-text').html(`<div> <h3> ${currentDate} </h3> </div> <div>Temp: ${currentTemp} °F </div> <div>Wind: ${currentWind} MPH</div> <div>Humidity: ${currentHumidity} % </div>;`); 
+
         // new button for each city entered with  class='city-button', attribute id='button-
-        let newCityEl = $('<button>').addClass('city-button').attr('id', `button-${city}`);
+        let newCityEl = document.createElement("button", (id = "TAG"));
+        newCityEl.textContent = city;
+        newCityEl.setAttribute("id", "button-" + city);
+        newCityEl.className = "city-button";
         weatherHistoryEl.append(newCityEl);
         console.log('test F-2')
 
@@ -132,6 +140,7 @@ function cityLatAndLon(userCity) {
     })
     .then((response) => {
         cityUpdateButton();
+        displayCityForecast(userCity);
     })
        }
 
@@ -156,9 +165,9 @@ function getFiveDayForecast(lat, lon) {
     console.log('test I-1')
 
     let cityForecastSearch = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=imperial`;
+   
     fetch(cityForecastSearch)
-        .then((response) => response.JSON())
-        console.log('test I-2')
+        .then((response) => response.json())
 
         .then((returnForecast) => {
             displayFiveDayForecast(returnForecast);
@@ -170,14 +179,14 @@ function getFiveDayForecast(lat, lon) {
 // pulls the parameters gridLat and gridLon in the function
 // the &units=imperial at the end returns imperial measurements (deg F & MPH )
 function getCityCurrentWeather(lat, lon) {
-    console.log('test J-1')
-
-    let cityWeatherSearch = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=imperial`
+       let cityWeatherSearch = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=imperial`;
     fetch(cityWeatherSearch)
     .then((response) => response.json())
     .then((returnWeather) => {
-        displayCurrentForecast(returnWeather);
+        console.log('returnWeather', returnWeather);
+        displayCurrentForecast(returnWeather.list[0]);
     });
+    
 }
 
 /* Acceptance Criteria 
@@ -188,20 +197,30 @@ THEN I am presented with the city name, the date, an icon representation of weat
 function displayCurrentForecast(currentWeather) {
     let displayedCity = currentWeather.name;
     let currentDate = moment.unix(currentWeather.dt).format("DD MMM YYY h:mm:a");
-    let currentIcon = currentWeather.weather[0].icon;
-    let currentTemp = currentWeather.main.temp.toFixed(2);
+    let currentTemp = (currentWeather.main.temp).toFixed(2);
     let currentWind = currentWeather.wind.speed;
     let currentHumidity = currentWeather.main.humidity;
+    let currentIcon = currentWeather.weather[0].icon;
     let backgroundImageURL = `http://openweathermap.org/img/wn/${currentIcon}@2x.png`;
-    console.log('test K-1')
+    let newDivEl = document.createElement("div");
+    let newParaEl = document.createElement("p");
+    console.log('Current Weather', currentWeather);
+    
+    // creates new elements with attributes - tried doing it this way. it wouldn't work
+    // newDivEl = $('<div>').addClass('card').attr('current-city', current-city.id).css({width: '75%','background-image': `url(${backgroundImageURL})`}).html(`<h1 id="displayedCity">${displayedCity}</h1>`);
+    // newParaEl = $("<p>").addClass('current-card-text').html(`<div> <h3> ${currentDate} </h3> </div> <div>Temp: ${currentTemp} °F </div> <div>Wind: ${currentWind} MPH</div> <div>Humidity: ${currentHumidity} % </div>;`); 
 
+    newDivEl.id ='current-city';
+    newDivEl.className = 'card';
+    newDivEl.style = 'width: 75%';
+    newDivEl.innerHTML = `<h1 id="displayedCity">${displayedCity}</h1>`;
+    newDivEl.style.backgroundImage = `url(${backgroundImageURL})`
 
-    // creates new elements with attributes
-    let newDivEl = $('<div>').addClass('card').attr('current-city', current-city.id).css({width: '75%','background-image': `url(${backgroundImageURL})`}).html(`<h1 id="displayedCity">${displayedCity}</h1>`);
-    let newParaEl = $("<p>").addClass('current-card-text').html(`<div> <h3> ${currentDate} </h3> </div> <div>Temp: ${currentTemp} °F </div> <div>Wind: ${currentWind} MPH</div> <div>Humidity: ${currentHumidity} % </div>;`); 
-
+    newParaEl.className = "today-card-text";
+    newParaEl.innerHTML = `<div> <h3> ${currentDate} </h3> </div> <div>Temp: ${currentTemp} °F </div> <div>Wind: ${currentWind} MPH</div> <div>Humidity: ${currentHumidity} % </div>`;
+  
     // append the new weather data
-    newDivEl.append.apply(newParaEl);
+    newDivEl.append(newParaEl);
     todaysWeatherEl.append(newDivEl)
 
     console.log('test Final');
@@ -224,7 +243,9 @@ function displayFiveDayForecast(forecastWeather) {
     let timeOffset = 0;
     // finds the time zone of the current city
     let forecastedTimezone = forecastWeather.city.timezone;
-    let forecastedTime = forecastWeather.list.fiveDayIndex.dt;
+    console.log("forecastWeather.list",forecastWeather.city.timezone);
+
+    // let forecastedTime = forecastWeather.list.fiveDayIndex.dt;
     let forecastedAdjTime = forecastWeather + forecastedTimezone;
     // formats the forecasted Hour to 24hr clock to just the hour element to use in the next step 
     forecastedHour = moment.unix(forecastedAdjTime).format("HH");
@@ -234,7 +255,7 @@ function displayFiveDayForecast(forecastWeather) {
     // as long as forecastedHour does not equal to 12 (noon) and timeOffset is less that 8
     while (forecastedHour != 12 && timeOffset < 8) {
         timeOffset++ // time gets incremented
-        forecastedTime = forecastWeather.list.fiveDayIndex.dt
+        let forecastedTime = forecastWeather.list[fiveDayIndex].dt
         forecastedAdjTime = forecastWeather + forecastedTimezone;
         // formats the forecasted Hour to 2 digits (includes the 0 prior to 1000 hrs) to use in the next step 
         forecastedHour = moment.unix(forecastedAdjTime).format("KK");
@@ -242,19 +263,37 @@ function displayFiveDayForecast(forecastWeather) {
     }
     // loop thru forecastWeather and add 8hrs
     for (let index = timeOffset; index < forecastWeather.list.length; index+8 ) {
-        fiveDayForecast[fiveDayIndex] = forecastWeather.list.timeOffset.dt
+        fiveDayForecast[fiveDayIndex] = forecastWeather.list[timeOffset]
 
         let forecastedDate = moment.unix(forecastWeather.list[index].dt).format("DD MMM YYYY"); 
-        let forecastedTemp = fiveDayForecast[fiveDayIndex].main.temp.toFixed(2);
+        let forecastedTemp = (fiveDayForecast[fiveDayIndex].main.temp).toFixed(2);
         let forecastedWind = fiveDayForecast[fiveDayIndex].wind.speed;
         let forecastedHumidity = fiveDayForecast[fiveDayIndex].main.humidity;
         let forecastedIcon = fiveDayForecast[fiveDayIndex].weather[0].icon
+        let newDivEl = document.createElement("div");
+        let newParaEl = document.createElement("p");
+        let newDivTwoEl = document.createElement("div");
+        let newImgEl = document.createElement("img");
 
-    // creates new elements with attributes
-        let newDivEl = $('<div>').addClass('card').attr(`day + (fiveDayIndex + 1)`, day.id).css({width: '15%','background-image': `url(${backgroundImageURL})`}).html(`<h3 class="date-header">${forecastedDate} </h3>`);
-        let newImgEl = $('<img>').addClass('card-img-top').attr('src = `http://openweathermap.org/img/wn/${forecastedIcon}@2x.png` ','alt = Weather Icon');
-        let newDivTwoEl =$('<div>').addClass('card-body')
-        let newParaEl = $("<p>").addClass('card-text').html(`<div>Temp: ${forecastedTemp} °F </div> <div>Wind: ${forecastedWind} MPH</div> <div>Humidity: ${forecastedHumidity} %</div>`); 
+        // creates new elements with attributes - tried doing it this way. it wouldn't work
+        // let newDivEl = $('<div>').addClass('card').attr(`day + (fiveDayIndex + 1)`, day.id).css({width: '15%','background-image': `url(${backgroundImageURL})`}).html(`<h3 class="date-header">${forecastedDate} </h3>`);
+        // let newImgEl = $('<img>').addClass('card-img-top').attr(`src = http://openweathermap.org/img/wn/${forecastedIcon}@2x.png`,'alt = Weather Icon');
+        // let newDivTwoEl =$('<div>').addClass('card-body')
+        // let newParaEl = $("<p>").addClass('card-text').html(`<div>Temp: ${forecastedTemp} °F </div> <div>Wind: ${forecastedWind} MPH</div> <div>Humidity: ${forecastedHumidity} %</div>`); 
+      
+        newDivEl.id = "day" + (fiveDayIndex + 1);
+        newDivEl.className = "card";
+        newDivEl.style = "width: 15%";
+        newDivEl.innerHTML = `<h3 class="date-header">${forecastedDate} </h3>`;
+    
+        newImgEl.className = "card-img-top";
+        newImgEl.src = `http://openweathermap.org/img/wn/${forecastedIcon}@2x.png`;
+        newImgEl.alt = "Weather Icon";
+    
+        newDivTwoEl.className = "card-body";
+    
+        newParaEl.className = "card-text";
+        newParaEl.innerHTML =`<div>Temp: ${forecastedTemp} °F </div> <div>Wind: ${forecastedWind} MPH</div> <div>Humidity: ${forecastedHumidity} %</div>`;
 
         // finally append everything...
         newDivEl.append(newImgEl);
