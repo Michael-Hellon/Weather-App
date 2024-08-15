@@ -1,15 +1,8 @@
-// declare Selectors:
-
 const searchCityBtnEl = document.querySelector("#search-form");
-// declares cityInputE1 variable wnd stores city name once inputted
 const cityInputEl = document.querySelector("#city-Name");
-// declare selector for the clear button
 const clearBtnEl = document.querySelector("#clear-button");
-// selector for weather history
 const weatherHistoryEl = document.querySelector("#weather-history");
-// selector for forecast
 const forecastEl = document.querySelector("#forecast");
-// selector for todays Weather
 const todaysWeatherEl = document.querySelector("#today");
 
 // my API Key for openweathermap.org
@@ -36,6 +29,7 @@ weatherHistoryEl.addEventListener("click", function (event) {
   }
 });
 console.log('test a-3');
+
 // Clears history when you click "Clear Cities"
 clearBtnEl.addEventListener("click", function() {
     console.log('test B');
@@ -67,9 +61,7 @@ searchCityBtnEl.addEventListener("click", function (event) {
 console.log('test B-2')
 
 // // clears local storage... 
-// function clearLocalStorage() {
-//     // localStorage.clear();
-// }
+
 
 // clears forecast when there are no cities to display
 function clearDisplayedForecast(){
