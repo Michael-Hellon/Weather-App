@@ -33,7 +33,7 @@ console.log('test a-3');
 // Clears history when you click "Clear Cities"
 clearBtnEl.addEventListener("click", function() {
     console.log('test B');
-    clearLocalStorage();
+    // clearLocalStorage();
     cityUpdateButton();
     clearDisplayedForecast();
 }
@@ -113,7 +113,7 @@ function cityUpdateButton() {
 // This function provides the lat & lon for the city
 function cityLatAndLon(userCity) {
  
-    const citySearch = `https://api.openweathermap.org/geo/1.0/direct?q=${userCity}&limit=5&appid=${APIkey}`
+    const citySearch = `https://api.openweathermap.org/geo/1.0/direct?q=${userCity}&limit=1&appid=${APIkey}`
     console.log('test G')
 
     fetch(citySearch)
